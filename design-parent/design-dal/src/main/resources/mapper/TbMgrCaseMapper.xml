@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdsj.design.dal.mapper.TbMgrCaseMapper">
+  <resultMap id="BaseResultMap" type="com.cdsj.design.dal.model.TbMgrCase">
+    <id column="CASE_ID" jdbcType="BIGINT" property="caseId" />
+    <result column="CUS_NO" jdbcType="BIGINT" property="cusNo" />
+    <result column="CASE_PRICE" jdbcType="VARCHAR" property="casePrice" />
+    <result column="CASE_STYLE" jdbcType="VARCHAR" property="caseStyle" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CASE_ID, CUS_NO, CASE_PRICE, CASE_STYLE
+  </sql>
+  <select id="selectByExample" parameterType="com.cdsj.design.dal.model.TbMgrCaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mgr_case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mgr_case
+    where CASE_ID = #{caseId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_mgr_case
+    where CASE_ID = #{caseId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cdsj.design.dal.model.TbMgrCaseExample">
+    delete from tb_mgr_case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="CASE_ID" keyProperty="caseId" parameterType="com.cdsj.design.dal.model.TbMgrCase" useGeneratedKeys="true">
+    insert into tb_mgr_case (CUS_NO, CASE_PRICE, CASE_STYLE
+      )
+    values (#{cusNo,jdbcType=BIGINT}, #{casePrice,jdbcType=VARCHAR}, #{caseStyle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="CASE_ID" keyProperty="caseId" parameterType="com.cdsj.design.dal.model.TbMgrCase" useGeneratedKeys="true">
+    insert into tb_mgr_case
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusNo != null">
+        CUS_NO,
+      </if>
+      <if test="casePrice != null">
+        CASE_PRICE,
+      </if>
+      <if test="caseStyle != null">
+        CASE_STYLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusNo != null">
+        #{cusNo,jdbcType=BIGINT},
+      </if>
+      <if test="casePrice != null">
+        #{casePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="caseStyle != null">
+        #{caseStyle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cdsj.design.dal.model.TbMgrCaseExample" resultType="java.lang.Long">
+    select count(*) from tb_mgr_case
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mgr_case
+    <set>
+      <if test="record.caseId != null">
+        CASE_ID = #{record.caseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cusNo != null">
+        CUS_NO = #{record.cusNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.casePrice != null">
+        CASE_PRICE = #{record.casePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseStyle != null">
+        CASE_STYLE = #{record.caseStyle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mgr_case
+    set CASE_ID = #{record.caseId,jdbcType=BIGINT},
+      CUS_NO = #{record.cusNo,jdbcType=BIGINT},
+      CASE_PRICE = #{record.casePrice,jdbcType=VARCHAR},
+      CASE_STYLE = #{record.caseStyle,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdsj.design.dal.model.TbMgrCase">
+    update tb_mgr_case
+    <set>
+      <if test="cusNo != null">
+        CUS_NO = #{cusNo,jdbcType=BIGINT},
+      </if>
+      <if test="casePrice != null">
+        CASE_PRICE = #{casePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="caseStyle != null">
+        CASE_STYLE = #{caseStyle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CASE_ID = #{caseId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdsj.design.dal.model.TbMgrCase">
+    update tb_mgr_case
+    set CUS_NO = #{cusNo,jdbcType=BIGINT},
+      CASE_PRICE = #{casePrice,jdbcType=VARCHAR},
+      CASE_STYLE = #{caseStyle,jdbcType=VARCHAR}
+    where CASE_ID = #{caseId,jdbcType=BIGINT}
+  </update>
+</mapper>
